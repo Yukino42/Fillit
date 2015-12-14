@@ -32,26 +32,17 @@ void  ft_error_exit(char *str)
   exit(0);
 }
 
-int		ft_check_diez_block(char **tab, int Y, int X)
+int		ft_check_sharp_block(char **tab, int Y, int X)
 {
 	int i;
-	int y;
-	int x;
-	int line;
-
-	x = X;
-	y = Y;
 	i = 0;
-	line = 0;
-	if (((y-1) %4) == 0)
-		line++;
-	else if ((tab[y][X]) == '#')
+	if((Y - 1) && ((tab[Y - 1][X]) == '#') && (Y - 1 %4) != 0)
 		i++;
-	if((tab[Y][x-1]) == '#')
+	if((tab[Y][X - 1]) == '#'  && tab[Y][X - 1])
 		i++;
-	if((tab[Y][x+2]) == '#')
+	if((tab[Y][X + 1]) == '#' && tab[Y][X + 1])
 		i++;
-	if((tab[y+2][X]) == '#')
+	if((tab[Y + 1][X]) == '#' && tab[Y + 1][X] && (Y %4) != 0)
 		i++;
 	if (i == 0)
 		return (0);
@@ -94,7 +85,7 @@ void    ft_error(char *argv)
 	int   	x;
 	int   	y;
 	int   	k;
-	int 	fake;
+	int 	sharp;
 
 	if ((file_descriptor = open(argv, O_RDONLY)) == -1)
 		ft_error_exit("error1");
@@ -126,7 +117,7 @@ void    ft_error(char *argv)
 	x = -1;
 	y = 0;
 	counter = 0;
-	fake = 0;
+	sharp = 0;
 	while (tab[y])
 	{
 		k = -1;
@@ -134,10 +125,10 @@ void    ft_error(char *argv)
 		{
 			if (tab[y][++x] == '#')
 			{
-				fake++;
-				if ((ft_check_diez_block(tab, y, x)) == 0)
+				sharp++;
+				if ((ft_check_sharp_block(tab, y, x)) == 0)
 				{
-					ft_putnbr(fake);
+					ft_putnbr(sharp);
 					write(1, " ", 1);
 					ft_error_exit("error10");
 				}	
@@ -158,9 +149,9 @@ void    ft_error(char *argv)
 
 int     main(int argc, char **argv)
 { 
-  if (argc != 2)
-    ft_error("erreur");
-  else if (argc == 2)
-    ft_error(argv[1]);
+  if (argc == 2)
+	ft_error(argv[1]);
+  else if (argc != 2)
+    ft_error_exit("erreur");
   return (0);
 }
