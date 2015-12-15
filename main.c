@@ -32,21 +32,22 @@ void  ft_error_exit(char *str)
   exit(0);
 }
 
+void	ft_check_sharp_block_up(char **tab, int Y, int X)
+{
+	if((tab[Y - 1][X]) == '#'  && (tab[Y - 1][X]) && ((Y - 1) %4) != 0)
+		return (1);
+}
+
 int		ft_check_sharp_block(char **tab, int Y, int X)
 {
-	int i;
-	i = 0;
-	if((Y - 1) && ((tab[Y - 1][X]) == '#') && (Y - 1 %4) != 0)
-		i++;
-	if((tab[Y][X - 1]) == '#'  && tab[Y][X - 1])
-		i++;
-	if((tab[Y][X + 1]) == '#' && tab[Y][X + 1])
-		i++;
-	if((tab[Y + 1][X]) == '#' && tab[Y + 1][X] && (Y %4) != 0)
-		i++;
-	if (i == 0)
-		return (0);
-	return (1);
+	if((ft_check_sharp_block_up(tab, Y, X) == 1)
+		return (1);
+	else if((tab[Y][X - 1]) == '#'  && tab[Y][X - 1])
+		return (1);
+	else if((tab[Y][X + 1]) == '#' && tab[Y][X + 1])
+		return (1);
+	else if ((tab[Y + 1][X]) == '#' && (Y %4) != 0)
+	return (0);
 }
 
 void	ft_print_tetri(char **tab)
