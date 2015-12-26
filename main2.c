@@ -16,7 +16,12 @@
 #define BUFF_SIZE 545
 #include <stdio.h>
 
-void  ft_error_exit(char *str)
+int		ft_check_block(char *buff);
+int		ft_count_back(char *buff);
+int		ft_count_char_sharp_line(char *buff);
+int		ft_count_sharp(char *buff);
+
+void	ft_error_exit(char *str)
 {
   int i;
   char c;
@@ -31,64 +36,20 @@ void  ft_error_exit(char *str)
   write(1, "\n", 1);
   exit(0);
 }
-void	ft_print_buff(char *buff)
+
+void	ft_print_tab(char ***tab)
 {
 	int i;
 	
 	i = 0;
-	while(buff[i])
+	while(tab[i])
 	{
-		write(1, &buff[i], 1);
+		write(1, &tab[i], 1);
 		i++;
 	}
-}
-int		ft_count_sharp(char *buff)
-{
-	int i;
-	int counter;
-	
-	i = 0;
-	counter = 0;
-	while (buff[i])
-	{
-		if (buff[i] == '#')
-			counter++;
-		i++;		
-	}
-	if ((counter %4) != 0)
-		return (0);
-	return (1);
 }
 
-int		ft_count_char_sharp_line(char *buff)
-{
-	int i;
-	int j;
-	int new;
-	int sharp;
-	
-	i = 0;
-	j = 0;
-	new = 0;
-	sharp = 0;
-	while (buff[i])
-	{
-		while (buff[i] != '\n')
-		{
-			if (buff[i] == '#')
-				sharp++;
-			i++;
-			j++;
-		}
-		new++;
-		if (j != 4 && (new %5) != 0 && sharp %4 != 0)
-			return (0);			
-		j = 0;
-		i++;
-	}
-	return (1);
-}
-int		ft_count_back(char *buff)
+int		ft_count_char(char *buff)
 {
 	int i;
 	int j;
@@ -97,48 +58,52 @@ int		ft_count_back(char *buff)
 	j = 0;
 	while(buff[i])
 	{
-		if (buff[i] == '#')
+		if(buff[i] != '\n')
 			j++;
 		i++;
 	}
 	return (j);
 }
-int		ft_check_block(char *buff)
+char ***ft_send_tab(char *buff)
 {
+	char ***tab;
 	int i;
-	int j;
-	int new;
+	int rev;
+	int x;
+	int y;
+	int z;
 	
 	i = 0;
-	while (buff[i])
+	z = 0;
+	if ((tab = (char ***)malloc(sizeof(**tab) *(ft_count_char(buff) +1))))
+		return (NULL);
+	while(buff[i])
 	{
-		j = 0;
-		new = 0;
-		while (new <= 4 && buff[i])
+		rev = 0;
+		y = 0;
+		x = 0;
+		while(rev != 4 && buff[i])
 		{
+			if (buff[i] != '\n')
+				tab[y][x] = buff[i];
 			if (buff[i] == '\n')
-				new++;
-			if ((i > 5) && buff[i - 5] && buff[i - 5] == '#' && buff[i] == '#')
-				j++;
-			if (buff[i - 1] && buff[i - 1] == '#' && buff[i] == '#')
-				j++;
-			if (buff[i + 1] && buff[i + 1] == '#' && buff[i] == '#')
-				j++;
-			if (buff[i + 5] && buff[i + 5] == '#' && buff[i] == '#'
-					&& (ft_count_back(buff) - 1) != new )
-				j++;
+			{
+				rev++;
+				y++;
+			}
 			i++;
+			x++;
 		}
-		if (j < 6)
-			return (0);
+		z++;
+		i++;
 	}
-	return (1);
+	return (tab);
 }
 
 void    ft_error(char *argv)
 {
 	char	buff[BUFF_SIZE + 1];
-	char	**tab;
+	char	***tab;
 	int   	file_descriptor;
 	int		read_result;
 	int		tetri_nomber;
@@ -158,9 +123,9 @@ void    ft_error(char *argv)
 		ft_error_exit("error5");
 	if (ft_check_block(buff) == 0)
 		ft_error_exit("error6");
-		
-		
-	ft_print_buff(buff);
+	if ((tab = (ft_send_tab(buff))) == NULL)
+		ft_error_exit("error7");
+	ft_print_tab(tab);
 }
 
 int     main(int argc, char **argv)

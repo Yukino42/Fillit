@@ -12,16 +12,17 @@
 
 NAME = fillit
 FLAG = -Wall -Wextra -Werror
-SRC =  
+SRC =  \
 	main.c \
+	../Libft/libft.a  \
 
 all = $(NAME)
 
 $(NAME) = 
 	gcc $(FLAG) $(SRC) -o $(NAME)
-
+	
 clean =
-	rm -rf $(SRC.0)
+	rm -rf $(SRC)
 
 fclean = clean
 	rm -rf $(NAME)
