@@ -65,7 +65,7 @@ int		ft_count_char(char *buff)
 	return (j);
 }
 
-char *ft_rev_charp(char *buff)
+char *ft_print_charp(char *buff)
 {
     char *str;
     int i;
@@ -75,7 +75,7 @@ char *ft_rev_charp(char *buff)
     j = 0;
     if (str = (char *)malloc(sizeof(str) * (ft_count_char) + 1))
         return (NULL);
-    while (buff[i])
+    while(buff[i])
     {
         if (buff[i] != '\n')
         {
@@ -90,38 +90,38 @@ char *ft_rev_charp(char *buff)
 
 char ***ft_send_tab(char *buff)
 {
-	char ***tab;
-	int i;
-	int rev;
-	int x;
-	int y;
-	int z;
-	
-	i = 0;
-	z = 0;
-	if ((tab = (char ***)malloc(sizeof(**tab) *(ft_count_char(buff) +1))))
+    char ***tab3d;
+    char *tab;
+    int i;
+    int j;
+    int counter_block;
+    int counter;
+    
+    i = 0;
+    j = 0;
+    counter = 0;
+    z = 0;
+    tab = ft_print_charp(buff);
+	if ((tab3d = (char ***)malloc(sizeof(**tab3d) *(ft_count_char(buff) +1))))
 		return (NULL);
-	while(buff[i])
-	{
-		rev = 0;
-		y = 0;
-		x = 0;
-		while(rev != 4 && buff[i])
-		{
-			if (buff[i] != '\n')
-				tab[y][x] = buff[i];
-			if (buff[i] == '\n')
-			{
-				rev++;
-				y++;
-			}
-			i++;
-			x++;
-		}
-		z++;
-		i++;
-	}
-	return (tab);
+    while(tab[i])
+    {
+        counter_block = 0;
+        y = 0;
+        while(counter_block <= 16)
+        {
+            x = 0;
+            while(counter < 3)
+            {
+                tab3d[y][x] = tab[i];
+                x++;
+                i++;
+            }
+            y++;
+        }
+        z++;
+    }
+	return (tab3d)
 }
 
 void    ft_error(char *argv)
@@ -133,22 +133,22 @@ void    ft_error(char *argv)
 	int		tetri_nomber;
 
 	if ((file_descriptor = open(argv, O_RDONLY)) == -1)
-		ft_error_exit("error1");
+		ft_error_exit("error");
 	if ((read_result = read(file_descriptor, buff, BUFF_SIZE)) == -1)
-  		ft_error_exit("error2");
+  		ft_error_exit("error");
 	buff[read_result] = '\0';
 	if (close(file_descriptor) == -1)
-		ft_error_exit("error3");
+		ft_error_exit("error");
 	if (((read_result + 1) % 21) != 0)
-		ft_error_exit("error4");
+		ft_error_exit("error");
 	if (ft_count_sharp(buff) == 0)
-		ft_error_exit("error5");
+		ft_error_exit("error");
 	if (ft_count_char_sharp_line(buff) == 0)
-		ft_error_exit("error5");
+		ft_error_exit("error");
 	if (ft_check_block(buff) == 0)
-		ft_error_exit("error6");
+		ft_error_exit("error");
 	if ((tab = (ft_send_tab(buff))) == NULL)
-		ft_error_exit("error7");
+		ft_error_exit("error");
 	ft_print_tab(tab);
 }
 
