@@ -64,6 +64,30 @@ int		ft_count_char(char *buff)
 	}
 	return (j);
 }
+
+char *ft_rev_charp(char *buff)
+{
+    char *str;
+    int i;
+    int j;
+    
+    i = 0;
+    j = 0;
+    if (str = (char *)malloc(sizeof(str) * (ft_count_char) + 1))
+        return (NULL);
+    while (buff[i])
+    {
+        if (buff[i] != '\n')
+        {
+            str[j] = buff[i];
+            j++;   
+        }
+        i++;
+    }
+    str[i] = '\0';
+    return (str);
+}
+
 char ***ft_send_tab(char *buff)
 {
 	char ***tab;
