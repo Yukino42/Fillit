@@ -37,97 +37,104 @@ void	ft_error_exit(char *str)
   exit(0);
 }
 
-void	ft_print_tab(char ***tab)
+int		ft_count_char(char *buff)
 {
 	int i;
 	
 	i = 0;
-	while(tab[i])
-	{
-		write(1, &tab[i], 1);
+	while(buff[i])
 		i++;
+	return (i);
+}
+
+void	ft_print_tab(char **tab)
+{
+	int i;
+	int y;
+	int x;
+	
+	i = 0;
+	while(tab[y])
+	{
+		
 	}
 }
 
-int		ft_count_char(char *buff)
+int		ft_count_line(char *buff)
 {
 	int i;
 	int j;
 	
 	i = 0;
-	j = 0;
+	j = -1;
 	while(buff[i])
 	{
-		if(buff[i] != '\n')
+		if (buff[i] == '\n')
 			j++;
 		i++;
 	}
 	return (j);
 }
-
-char *ft_print_charp(char *buff)
+int		ft_seperator_tetri(int y)
 {
-    char *str;
-    int i;
-    int j;
-    
-    i = 0;
-    j = 0;
-    if (str = (char *)malloc(sizeof(str) * (ft_count_char) + 1))
-        return (NULL);
-    while(buff[i])
-    {
-        if (buff[i] != '\n')
-        {
-            str[j] = buff[i];
-            j++;   
-        }
-        i++;
-    }
-    str[i] = '\0';
-    return (str);
+	int i;
+	
+	i = 0;
+	while(i < 140)
+	{
+		if (y == i)
+			return (1);
+		if (i == 0)
+			i = i + 4;
+		else
+			i = i + 5;
+	}
+	return (0);
 }
 
-char ***ft_send_tab(char *buff)
+char	**ft_tab_buff(char *buff)
 {
-    char ***tab3d;
-    char *tab;
-    int i;
-    int j;
-    int counter_block;
-    int counter;
-    
-    i = 0;
-    j = 0;
-    counter = 0;
-    z = 0;
-    tab = ft_print_charp(buff);
-	if ((tab3d = (char ***)malloc(sizeof(**tab3d) *(ft_count_char(buff) +1))))
+	char **tab;
+	int i;
+	int x;
+	int y;
+	
+	tab[y] = (char **)malloc(sizeof(*tab[y]) * (ft_count_line(buff)));
+	if (!tab)
 		return (NULL);
-    while(tab[i])
-    {
-        counter_block = 0;
-        y = 0;
-        while(counter_block <= 16)
-        {
-            x = 0;
-            while(counter < 3)
-            {
-                tab3d[y][x] = tab[i];
-                x++;
-                i++;
-            }
-            y++;
-        }
-        z++;
-    }
-	return (tab3d)
+	i = 0;
+	y = 0;
+	while(tab[y])
+	{
+		if (ft_seperator_tetri(y) != 1)
+		{
+			if((tab[y] = (char*)malloc(sizeof(tab[y]) * 4)))
+				return (NULL);
+		}
+		else
+			tab[y] = (char*)malloc(sizeof(tab[y]) * 1);
+		y++;
+	}
+	while(buff[i])
+	{
+		x = 0;
+		while(buff[i] != '\n')
+		{
+			write(1, "salut\n", 7);
+			tab[y][x] = buff[i];
+			write(1, "salput\n", 8);
+			x++;
+			i++;
+		}
+		tab[y][x] = buff[i];
+		y++;
+	}
+	return (tab);
 }
 
 void    ft_error(char *argv)
 {
 	char	buff[BUFF_SIZE + 1];
-	char	***tab;
 	int   	file_descriptor;
 	int		read_result;
 	int		tetri_nomber;
@@ -147,9 +154,9 @@ void    ft_error(char *argv)
 		ft_error_exit("error");
 	if (ft_check_block(buff) == 0)
 		ft_error_exit("error");
-	if ((tab = (ft_send_tab(buff))) == NULL)
-		ft_error_exit("error");
-	ft_print_tab(tab);
+	if (ft_tab_buff(buff) == NULL)
+		ft_error_exit("error1");
+	ft_print_tab(ft_tab_buff(buff));
 }
 
 int     main(int argc, char **argv)
