@@ -60,7 +60,7 @@ void	ft_print_tab(char **tab)
 	}
 }
 
-int		ft_count_line(char *buff)
+int		line(char *buff)
 {
 	int i;
 	int j;
@@ -99,34 +99,29 @@ char	**ft_tab_buff(char *buff)
 	int x;
 	int y;
 	
-	tab[y] = (char **)malloc(sizeof(*tab[y]) * (ft_count_line(buff)));
-	if (!tab)
-		return (NULL);
 	i = 0;
 	y = 0;
-	while(tab[y])
+	tab = (char **)malloc((line(buff)) * (sizeof(*tab)));
+	while(i < line(buff))
 	{
 		if (ft_seperator_tetri(y) != 1)
-		{
-			if((tab[y] = (char*)malloc(sizeof(tab[y]) * 4)))
-				return (NULL);
-		}
+			tab[y] = (char*)malloc(5 *sizeof(tab));
 		else
-			tab[y] = (char*)malloc(sizeof(tab[y]) * 1);
+			tab[y] = (char*)malloc(sizeof(tab) * 1);
+		i++;
 		y++;
 	}
+	y = 0;
 	while(buff[i])
 	{
 		x = 0;
 		while(buff[i] != '\n')
 		{
-			write(1, "salut\n", 7);
 			tab[y][x] = buff[i];
-			write(1, "salput\n", 8);
 			x++;
 			i++;
 		}
-		tab[y][x] = buff[i];
+		tab[y][x] = '\0';
 		y++;
 	}
 	return (tab);
