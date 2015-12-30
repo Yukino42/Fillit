@@ -14,16 +14,16 @@ int		ft_count_sharp(char *buff)
 {
 	int i;
 	int counter;
-	
+
 	i = 0;
 	counter = 0;
 	while (buff[i])
 	{
 		if (buff[i] == '#')
 			counter++;
-		i++;		
+		i++;
 	}
-	if ((counter %4) != 0)
+	if ((counter % 4) != 0)
 		return (0);
 	return (1);
 }
@@ -34,7 +34,7 @@ int		ft_count_char_sharp_line(char *buff)
 	int j;
 	int new;
 	int sharp;
-	
+
 	i = 0;
 	j = 0;
 	new = 0;
@@ -49,8 +49,8 @@ int		ft_count_char_sharp_line(char *buff)
 			j++;
 		}
 		new++;
-		if (j != 4 && (new %5) != 0 && sharp %4 != 0)
-			return (0);			
+		if (j != 4 && (new % 5) != 0 && sharp % 4 != 0)
+			return (0);
 		j = 0;
 		i++;
 	}
@@ -61,10 +61,10 @@ int		ft_count_back(char *buff)
 {
 	int i;
 	int j;
-	
+
 	i = 0;
 	j = 0;
-	while(buff[i])
+	while (buff[i])
 	{
 		if (buff[i] == '#')
 			j++;
@@ -78,7 +78,7 @@ int		ft_check_block(char *buff)
 	int i;
 	int j;
 	int new;
-	
+
 	i = 0;
 	while (buff[i])
 	{
@@ -95,7 +95,7 @@ int		ft_check_block(char *buff)
 			if (buff[i + 1] && buff[i + 1] == '#' && buff[i] == '#')
 				j++;
 			if (buff[i + 5] && buff[i + 5] == '#' && buff[i] == '#'
-					&& (ft_count_back(buff) - 1) != new )
+				&& (ft_count_back(buff) - 1) != new)
 				j++;
 			i++;
 		}
@@ -103,4 +103,14 @@ int		ft_check_block(char *buff)
 			return (0);
 	}
 	return (1);
+}
+
+int		ft_count_char(char *buff)
+{
+	int i;
+
+	i = 0;
+	while (buff[i])
+		i++;
+	return (i);
 }
