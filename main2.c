@@ -47,86 +47,103 @@ int		ft_count_char(char *buff)
 	return (i);
 }
 
-void	ft_print_tab(char **tab)
+int		count_tetri(char *buff)
 {
 	int i;
+	int count;
+	
+	i = 0;
+	count = 0;
+	while(buff[i])
+	{
+		if(buff[i] != '\n')
+			count++;
+		i++;
+	}
+	count = count / 16;
+	return (count);
+}
+
+char 	***add_tetri_to_table(char *buff, char ***table, int count)
+{
+	int i;
+	int z;
 	int y;
 	int x;
 	
 	i = 0;
-	while(tab[y])
+	z = 0;
+	while(z < count)
 	{
-		
-	}
-}
-
-int		line(char *buff)
-{
-	int i;
-	int j;
-	
-	i = 0;
-	j = -1;
-	while(buff[i])
-	{
-		if (buff[i] == '\n')
-			j++;
-		i++;
-	}
-	return (j);
-}
-int		ft_seperator_tetri(int y)
-{
-	int i;
-	
-	i = 0;
-	while(i < 140)
-	{
-		if (y == i)
-			return (1);
-		if (i == 0)
-			i = i + 4;
-		else
-			i = i + 5;
-	}
-	return (0);
-}
-
-char	**ft_tab_buff(char *buff)
-{
-	char **tab;
-	int i;
-	int x;
-	int y;
-	
-	i = 0;
-	y = 0;
-	tab = (char **)malloc((line(buff)) * (sizeof(*tab)));
-	while(i < line(buff))
-	{
-		if (ft_seperator_tetri(y) != 1)
-			tab[y] = (char*)malloc(5 *sizeof(tab));
-		else
-			tab[y] = (char*)malloc(sizeof(tab) * 1);
-		i++;
-		y++;
-	}
-	y = 0;
-	while(buff[i])
-	{
-		x = 0;
-		while(buff[i] != '\n')
+		y = 0;
+		while(y < 4)
 		{
-			tab[y][x] = buff[i];
-			x++;
-			i++;
+			x = 0;
+			while(x < 4)
+			{
+				if(buff[i] != '\n')
+				{
+					table[z][y][x] = buff[i];
+					x++;
+				}
+				i++;
+			}
+			y++;
 		}
-		tab[y][x] = '\0';
-		y++;
+		z++;
 	}
-	return (tab);
+	return(table);
 }
 
+char	***ft_tab_buff(char *buff)
+{
+	char ***table;
+	int z;
+	int y;
+	
+	table = (char ***)malloc( count_tetri(buff) * sizeof(char **));
+	z = 0;
+	while(z < count_tetri(buff))
+	{
+		table[z] = (char **)malloc(4 * sizeof(char*));
+		y = 0;
+		while(y < 4)
+		{
+			table[z][y] = (char *)malloc(4 * sizeof(char));
+			y++;
+		}
+		z++;
+	}
+	if (!table)
+		return (NULL);
+	return (add_tetri_to_table(buff, table, count_tetri(buff)));
+}
+
+void	print_tab_3D(char ***tab, int count)
+{
+	int x;
+	int y;
+	int z;
+	
+	z = 0;
+	while(z < count)
+	{
+		y = 0;
+		while(y < 4)
+		{
+			x = 0;
+			while(x < 4)
+			{
+				write(1, &tab[z][y][x],1);
+				x++;
+			}
+			y++;
+			write(1, "\n", 1);
+		}
+		write(1, "\n", 1);
+		z++;
+	}
+}
 void    ft_error(char *argv)
 {
 	char	buff[BUFF_SIZE + 1];
@@ -151,7 +168,7 @@ void    ft_error(char *argv)
 		ft_error_exit("error");
 	if (ft_tab_buff(buff) == NULL)
 		ft_error_exit("error1");
-	ft_print_tab(ft_tab_buff(buff));
+	print_tab_3D(ft_tab_buff(buff), count_tetri(buff));	
 }
 
 int     main(int argc, char **argv)
