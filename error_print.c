@@ -1,6 +1,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdlib.h>
+#include "../Libft/libft.h"
 
 void		ft_error_exit(char *str)
 {
@@ -42,5 +43,25 @@ void		print_tab_3d(char ***tab, int count)
 		z++;
 		if (z != count)
 			write(1, "\n", 1);
+	}
+}
+
+void	ft_print_map(char **map)
+{
+	int y;
+	int x;
+
+	y = 0;
+	while (map[y])
+	{
+		x = 0;
+		while (map[y][x])
+		{
+			if (map[y][x])
+				ft_putchar(map[y][x]);
+			x++;
+		}
+		write(1, "\n", 1);
+		y++;
 	}
 }

@@ -22,7 +22,7 @@ int			ft_count_char_sharp_line(char *buff);
 int			ft_count_sharp(char *buff);
 void		ft_error_exit(char *str);
 void		print_tab_3d(char ***tab, int count);
-void	ft_resolve(char *** tab);
+void		ft_resolve(char *** tab, int size_map);
 
 int			count_tetri(char *buff)
 {
@@ -96,11 +96,6 @@ char		***ft_tab_buff(char *buff)
 	return (add_tetri_to_table(buff, table, count_tetri(buff)));
 }
 
-void	ft_putchar(char c)
-{
-	write(1, &c, 1);
-}
-
 int			ft_verif_read_result(int read)
 {
 	int		i;
@@ -141,7 +136,7 @@ void		ft_error(char *argv)
 		ft_error_exit("error");
 	if (ft_tab_buff(buff) == NULL)
 		ft_error_exit("error");
-	ft_resolve(ft_tab_buff(buff));
+	ft_resolve(ft_tab_buff(buff), 4);
 }
 
 int			main(int argc, char **argv)
