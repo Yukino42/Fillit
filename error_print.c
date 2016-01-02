@@ -39,7 +39,8 @@ void		print_tab_3d(char ***tab, int count)
 			y++;
 			write(1, "\n", 1);
 		}
-		write(1, "\n", 1);
 		z++;
+		if (z != count)
+			write(1, "\n", 1);
 	}
 }

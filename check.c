@@ -39,9 +39,9 @@ int		ft_count_char_sharp_line(char *buff)
 	j = 0;
 	new = 0;
 	sharp = 0;
-	while (buff[i])
+	while (buff[i] != '\0')
 	{
-		while (buff[i] != '\n')
+		while (buff[i] != '\n' && buff[i])
 		{
 			if (buff[i] == '#')
 				sharp++;
@@ -49,7 +49,7 @@ int		ft_count_char_sharp_line(char *buff)
 			j++;
 		}
 		new++;
-		if (j != 4 && (new % 5) != 0 && sharp % 4 != 0)
+		if (j != 4 && (new % 4) != 0 && sharp % 4 != 0)
 			return (0);
 		j = 0;
 		i++;
@@ -103,14 +103,4 @@ int		ft_check_block(char *buff)
 			return (0);
 	}
 	return (1);
-}
-
-int		ft_count_char(char *buff)
-{
-	int i;
-
-	i = 0;
-	while (buff[i])
-		i++;
-	return (i);
 }
