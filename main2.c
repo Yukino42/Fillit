@@ -23,6 +23,7 @@ int			ft_count_sharp(char *buff);
 void		ft_error_exit(char *str);
 void		print_tab_3d(char ***tab, int count);
 void		ft_resolve(char *** tab, int size_map);
+int			ft_count_enter(char *buff);
 
 int			count_tetri(char *buff)
 {
@@ -96,22 +97,6 @@ char		***ft_tab_buff(char *buff)
 	return (add_tetri_to_table(buff, table, count_tetri(buff)));
 }
 
-int			ft_verif_read_result(int read)
-{
-	int		i;
-	int		j;
-
-	i = 21;
-	j = 20;
-	while (j < 938)
-	{
-		if ((j - 1) == read)
-			return (1);
-		j = j + i;
-	}
-	return (0);
-}
-
 void		ft_error(char *argv)
 {
 	char	buff[BUFF_SIZE + 1];
@@ -126,16 +111,16 @@ void		ft_error(char *argv)
 	buff[read_result] = '\0';
 	if (close(file_descriptor) == -1)
 		ft_error_exit("error");
-	if (ft_verif_read_result(read_result) != 1)
-		ft_error_exit("error");
-	if (ft_count_sharp(buff) == 0)
-		ft_error_exit("error");
+	if (ft_count_enter(buff) == 1)
+		ft_error_exit("error2");
+	if (ft_count_sharp(buff) == 1)
+		ft_error_exit("erroryolo");
 	if (ft_count_char_sharp_line(buff) == 0)
-		ft_error_exit("error");
+		ft_error_exit("error4");
 	if (ft_check_block(buff) == 0)
-		ft_error_exit("error");
+		ft_error_exit("error5");
 	if (ft_tab_buff(buff) == NULL)
-		ft_error_exit("error");
+		ft_error_exit("error6");
 	ft_resolve(ft_tab_buff(buff), 4);
 }
 

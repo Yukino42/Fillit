@@ -14,8 +14,10 @@
 #include <unistd.h>
 #include "../Libft/libft.h"
 
-void	ft_print_map(char **map);
-
+void	ft_print_map(char **map, int size_map);
+int		ft_check_line(char *tab);
+int		ft_check_coll(char **tab, int x, int y, int size_map);
+char	**ft_full_map_point(char **map, int size);
 
 char	**ft_creat_map(int size_map)
 {
@@ -29,59 +31,51 @@ char	**ft_creat_map(int size_map)
 		map[y] = (char *)malloc(size_map *sizeof(char));
 		y++;
 	}
-	return (map);
+	return (ft_full_map_point(map, size_map));
 }
 
-int		ft_check_line(char *tab)
+char	**ft_full_map_point(char **map, int size)
 {
+	int y;
 	int x;
-
-	x = 0;
-	while (tab[x])
+	
+	y = 0;
+	while (y < size)
 	{
-		if (tab[x] == '#')
-			return (1);
-		x++;
-	}
-	return (0);
-}
-
-int		ft_check_coll(char **tab, int x, int y, int size_map)
-{
-	while (y < size_map)
-	{
-		write(1, "a ", 3);
-		if (tab[y][x] == '#')
-			return (1);
+		x = 0;
+		while (x < size)
+		{
+			map[y][x] = '.';
+			x++;
+		}
 		y++;
 	}
-	return (0);
+	return (map);
 }
 
 char	**ft_cpy_tetri(char **map, char **tab, int y, int x)
 {
-	int Y;
-	int X;
-	int j;
-	int consty;
-	int constx;
+	int	i;
+	int	j;
+	int count;
 	
+	i = 0;
 	j = 0;
-	consty = y;
-	constx = x;
-	Y = 0;
-	while(tab[y] && map[Y])
+	while(y < 4)
 	{
-		X = 0;
-		constx = x;
-		while (tab[constx] && map[X])
+		count = 0;
+		while(x < 4)
 		{
-			map[Y][X] = tab[y][constx];
-			X++;
-			constx++;
+			if (tab[y][x])
+				map[i][j] = tab[y][x];
+			j++;
+			x++;
+			count++;
 		}
-		Y++;
-		consty++;
+		x = x - count;
+		j = j - count;
+		i++;
+		y++;
 	}
 	return (map);
 }
@@ -97,7 +91,6 @@ char 	**ft_print_tetri_map(char **map, char **tab, int size_map)
 	x = 0;
 	while (ft_check_coll(tab, x, y, size_map) != 1)
 		x++;
-	write(1, "salut", 6);
 	return (ft_cpy_tetri(map, tab, y, x));
 }
 
@@ -115,5 +108,6 @@ void	ft_resolve(char *** tab, int size_map)
 	// 	map = (ft_print_tetri_map(map, tab[z])
 	// 	z++;
 	// }
-	ft_print_map(ft_print_tetri_map(map, tab[z], size_map));
+	ft_print_map(ft_print_tetri_map(map, tab[z], size_map), size_map);
+
 }

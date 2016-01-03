@@ -19,6 +19,26 @@ void		ft_error_exit(char *str)
 	exit(0);
 }
 
+void	ft_print_map(char **map, int size_map)
+{
+	int y;
+	int x;
+
+	y = 0;
+	while (y < size_map)
+	{
+		x = 0;
+		while (x < size_map)
+		{
+			if (map[y][x])
+				ft_putchar(map[y][x]);
+			x++;
+		}
+		write(1, "\n", 1);
+		y++;
+	}
+}
+
 void		print_tab_3d(char ***tab, int count)
 {
 	int		x;
@@ -43,25 +63,5 @@ void		print_tab_3d(char ***tab, int count)
 		z++;
 		if (z != count)
 			write(1, "\n", 1);
-	}
-}
-
-void	ft_print_map(char **map)
-{
-	int y;
-	int x;
-
-	y = 0;
-	while (map[y])
-	{
-		x = 0;
-		while (map[y][x])
-		{
-			if (map[y][x])
-				ft_putchar(map[y][x]);
-			x++;
-		}
-		write(1, "\n", 1);
-		y++;
 	}
 }

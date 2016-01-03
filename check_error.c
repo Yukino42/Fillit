@@ -1,29 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check.c                                            :+:      :+:    :+:   */
+/*   check_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gahubaul <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/26 16:20:01 by gahubaul          #+#    #+#             */
-/*   Updated: 2015/12/26 16:20:08 by gahubaul         ###   ########.fr       */
+/*   Created: 2016/01/03 12:55:45 by gahubaul          #+#    #+#             */
+/*   Updated: 2016/01/03 12:55:51 by gahubaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_count_sharp(char *buff)
+int			ft_count_sharp(char *buff)
 {
-	int i;
-	int counter;
+	int		i;
+	int		j;
 
 	i = 0;
-	counter = 0;
+	j = 0;
 	while (buff[i])
 	{
 		if (buff[i] == '#')
-			counter++;
+			j++;
 		i++;
 	}
-	if ((counter % 4) != 0)
+	if ((j % 4) == 0)
+		return (0);
+	return (1);
+}
+
+int			ft_count_enter(char *buff)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	while (buff[i])
+	{
+		if (buff[i] == '\n')
+			j++;
+		i++;
+	}
+	if ((j % 5) != 0)
 		return (0);
 	return (1);
 }
@@ -39,12 +57,14 @@ int		ft_count_char_sharp_line(char *buff)
 	j = 0;
 	new = 0;
 	sharp = 0;
-	while (buff[i] != '\0')
+	while (buff[i])
 	{
 		while (buff[i] != '\n' && buff[i])
 		{
 			if (buff[i] == '#')
 				sharp++;
+			if (buff[i] != '.' && buff[i] != '#')
+				return (0);
 			i++;
 			j++;
 		}
