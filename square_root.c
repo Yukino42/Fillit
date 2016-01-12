@@ -6,34 +6,31 @@
 /*   By: rlemarch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/12 16:08:51 by rlemarch          #+#    #+#             */
-/*   Updated: 2016/01/12 18:06:21 by rlemarch         ###   ########.fr       */
+/*   Updated: 2016/01/12 20:51:50 by rlemarch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		square_root(float a)
+int		square_root(int a)
 {
-	float	b;
-	float	c;
-
-	a = 4 * a;
-	b = 1;
-	while (a >= 2)
-	{
-		a = a / 4;
-		b = 2 * b;
-	}
-	while (a < 1 / 2)
-	{
-		a = 4 * a;
-		b = b / 2;
-	}
-	c = 1 - a;
-	a = a * (1 + (c / 2));
-	c = ((3 + c) * c * c) / 4;
-	while (c >= 1E-15)
-	{
-		a = a * (1 + (c / 2));
-		c = ((3 + c) * c * c) / 4;
-	}
-	return ((int)((a * b) + 0.999999999999999));
+	if (a == 1)
+		return (2);
+	if (a == 2)
+		return (3);
+	if (a >= 3 & a <= 4)
+		return (4);
+	if (a >= 5 & a <= 6)
+		return (5);
+	if (a >= 7 & a <= 9)
+		return (6);
+	if (a >= 10 & a <= 12)
+		return (7);
+	if (a >= 13 & a <= 16)
+		return (8);
+	if (a >= 17 & a <= 20)
+		return (9);
+	if (a >= 21 & a <= 25)
+		return (10);
+	if (a == 26)
+		return (11);
+	return (0);
 }
